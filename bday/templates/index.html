@@ -1,49 +1,51 @@
+<!doctype html>
 <html lang="ko">
+	<head>
+		<meta charset="utf-8">
+        <title>편지</title>
+		<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+			$( document ).ready( function() {
+				$( 'button#sub' ).click( function() {
+					var m = $( 'input#textmsg' ).val();
+                    var json_data = {"msg": m}
+                    $.ajax({
+                        type: "POST",
+                        url: window.location.pathname + "memo",
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        },
+                        data: json_data,
+                    })
+                    window.location.reload()
+                })
+                
+            //    function showMemos(){
+            //        var memoBox=document.getElementById('memoBox')
+            //        $.ajax({
+            //            type:"GET",
+            //            url: window.location.pathname+"memo",
+            //            data:{},
+            //            success: function(response){
+            //                let memos_list = response["memos"];
+            //                for(let i = 0;i<memos_list.length; i++){
+            //                    memoBox.innerHTML+= `<p>${memos_list[i]}</p>`
+            //                }
+            //            }
+            //        })
+            //    }
+            })
+		</script>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>편지</title>
-</head>
+	<body>
+        <input type="text" id="textmsg"> <button id="sub">Click</button>
 
-<body>
-    <form action="./memo" method="post">
-        <input type="text" id="memosBox" name="msg">
-        <input type="submit" onclick="sub()">
-    </form>
-
-    <h1>편지 목록</h1>
-    {% for m in memos%}
-    {{m}}
-    <br>
-    {% endfor %}
-    <div id="new-memo"></div><br>
-
-
-
-</body>
+        <h1>편지 리스트</h1>
+        {% for m in memos%}
+        {{m}}
+        <br>
+        {% endfor %}
+	</body>
 
 </html>
-
-<script>
-    function sub(){
-        let text = document.getElementById('memosBox').value
-        json_data = {"msg":text}
-        alert(json_data['msg'])
-        $.ajax({
-            type: "POST",
-            url: window.location.pathname + "memo",
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            data: json_data,
-            success:
-                alert("성공")
-                // document.getElementById('new-memo').innerHTML += text
-            ,
-            error: alert("실패...")
-        })
-}
-
-</script>
