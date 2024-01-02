@@ -1,0 +1,49 @@
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Templates Example</title>
+</head>
+
+<body>
+    <form action="./memo" method="post">
+        <input type="text" id="memosBox" name="msg">
+        <input type="submit" onclick="sub()">
+    </form>
+
+    <h1>편지 목록</h1>
+    {% for m in memos%}
+    {{m}}
+    <br>
+    {% endfor %}
+    <div id="new-memo"></div><br>
+
+
+
+</body>
+
+</html>
+
+<script>
+    function sub(){
+        let text = document.getElementById('memosBox').value
+        json_data = {"msg":text}
+        alert(json_data['msg'])
+        $.ajax({
+            type: "POST",
+            url: window.location.pathname + "memo",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            data: json_data,
+            success:
+                alert("성공")
+                // document.getElementById('new-memo').innerHTML += text
+            ,
+            error: alert("실패...")
+        })
+}
+
+</script>
